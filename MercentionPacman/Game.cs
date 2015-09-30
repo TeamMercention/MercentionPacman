@@ -22,7 +22,7 @@ namespace MercentionPacman
         // ...
 
         // Game Board
-        // GameBoard board = new GameBoard();
+        //GameBoard board = new GameBoard();
         // Game Board-ът ще е матрица от стрингове, които представляват нивото на Pacman
         // Повечето неща ще бъдат в клас GameBoard, тук само ще се инициализира, за да могат да се
         // променят позициите на Pacman, Monster-ите по време на игра.
@@ -33,6 +33,7 @@ namespace MercentionPacman
 
         static void Main(string[] args)
         {
+            GameClasses.GameBoard.PrintGameBoard();
             // Load GUI
             // Ще определя позицията 
             // Към GameBoard ще се добавя отстрани и информация за точките до момента и животите, които остават.
