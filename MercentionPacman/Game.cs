@@ -117,5 +117,10 @@ namespace MercentionPacman
         {
 
         }
+
+        static void WinGame()
+        {
+
+        }
     }
 }
