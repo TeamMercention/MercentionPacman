@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MercentionPacman.GameClasses;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,18 +23,23 @@ namespace MercentionPacman
         // ...
 
         // Game Board
-        //GameBoard board = new GameBoard();
-        // Game Board-ът ще е матрица от стрингове, които представляват нивото на Pacman
-        // Повечето неща ще бъдат в клас GameBoard, тук само ще се инициализира, за да могат да се
-        // променят позициите на Pacman, Monster-ите по време на игра.
-        
-        // Ще се задават и размерите за прозореца на конзолата като константи
-        // const int GameBoardWidth = ...;
-        // const int GameBoardHeight = ...;
+        static GameBoard board = new GameBoard();
+
+        // Console Settings
+        const int GameWidth = 75;
+        const int GameHeight = 30;
+        static int pos = 17;
 
         static void Main(string[] args)
         {
-            GameClasses.GameBoard.PrintGameBoard();
+            Console.CursorVisible = false;
+            Console.Title = "Mercention Pacman";
+            Console.WindowWidth = GameWidth;
+            Console.BufferWidth = GameWidth;
+            Console.WindowHeight = GameHeight;
+            Console.BufferHeight = GameHeight;
+
+            RedrawBoard();
             // Load GUI
             // Ще определя позицията 
             // Към GameBoard ще се добавя отстрани и информация за точките до момента и животите, които остават.
@@ -60,6 +66,14 @@ namespace MercentionPacman
                 // го премества в новата посока - променя PacmanPosition
                 // Записва промените в GameBoard-a
 
+                board.ChangeElement(20, pos, BoardElements.Pacman);
+                board.ChangeElement(20, pos - 1, BoardElements.Empty);
+                RedrawBoard();
+                pos++;
+                if (pos > 25)
+                {
+                    break;
+                }
                 // Monster Ai
                 // Ако Monster-а срещне стигне до стена, избира случайна посока със Random
                 // Ако pacman е наблизо може да започне да го гони и т.н.
@@ -71,7 +85,7 @@ namespace MercentionPacman
                 // Ще изобразява всички настъпили промени в board-а от по-горните методи на екрана.
                 // Към него ще се изпълнява пак LoadGUI(), за да добави отстрани точките и животите.
 
-                Thread.Sleep(200); // Определя скоростта на играта, ще го променяме ако трябва
+                Thread.Sleep(100); // Определя скоростта на играта, ще го променяме ако трябва
             }
 
             GameOver();
@@ -79,7 +93,14 @@ namespace MercentionPacman
 
         static void LoadGUI()
         {
-
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.SetCursorPosition(5, 0);
+            Console.Write("Score: ");
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.SetCursorPosition(20, 0);
+            Console.Write("Lives: ");
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine();
         }
 
         static void LoadPlayer()
@@ -109,9 +130,17 @@ namespace MercentionPacman
 
         static void RedrawBoard()
         {
-
-
             LoadGUI();
+
+            for (int i = 0; i < board.GetBoard.GetLength(0); i++)
+            {
+                for (int j = 0; j < board.GetBoard.GetLength(1); j++)
+                {
+                    Console.Write("{0,2}", board.GetBoard[i, j]);
+                }
+                Console.WriteLine();
+            }
+
         }
 
         static void GameOver()
