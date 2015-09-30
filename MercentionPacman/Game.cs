@@ -34,13 +34,21 @@ namespace MercentionPacman
         // Повечето неща ще бъдат в клас GameBoard, тук само ще се инициализира, за да могат да се
         // променят позициите на Pacman, Monster-ите по време на игра.
 
-        // Ще се задават и размерите за прозореца на конзолата като константи
-        // const int GameBoardWidth = ...;
-        // const int GameBoardHeight = ...;
+        // Console Settings
+        const int GameWidth = 75;
+        const int GameHeight = 30;
 
         static void Main(string[] args)
         {
+            Console.CursorVisible = false;
+            Console.Title = "Mercention Pacman";
+            Console.WindowWidth = GameWidth;
+            Console.BufferWidth = GameWidth;
+            Console.WindowHeight = GameHeight;
+            Console.BufferHeight = GameHeight;
+
             GameBoard.PrintGameBoard();
+
             // Load GUI
             // Ще определя позицията 
             // Към GameBoard ще се добавя отстрани и информация за точките до момента и животите, които остават.
