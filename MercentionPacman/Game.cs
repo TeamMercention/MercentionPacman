@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-
+using MercentionPacman.GameClasses;
 namespace MercentionPacman
 {
     class Game
@@ -20,20 +20,27 @@ namespace MercentionPacman
         // Monsters
         // List<Monster> monsterList = new List<Monster>();
         // ...
+        static Position[] monsterList =
+        {
+            new Position(33,12),
+            new Position(34,12),
+            new Position(35,12),
+            new Position(36,12)
+        };
 
         // Game Board
         //GameBoard board = new GameBoard();
         // Game Board-ът ще е матрица от стрингове, които представляват нивото на Pacman
         // Повечето неща ще бъдат в клас GameBoard, тук само ще се инициализира, за да могат да се
         // променят позициите на Pacman, Monster-ите по време на игра.
-        
+
         // Ще се задават и размерите за прозореца на конзолата като константи
         // const int GameBoardWidth = ...;
         // const int GameBoardHeight = ...;
 
         static void Main(string[] args)
         {
-            GameClasses.GameBoard.PrintGameBoard();
+            GameBoard.PrintGameBoard();
             // Load GUI
             // Ще определя позицията 
             // Към GameBoard ще се добавя отстрани и информация за точките до момента и животите, които остават.
@@ -43,6 +50,7 @@ namespace MercentionPacman
 
             // Load Monsters
             // Като горното, само че за Monster-и
+            LoadMonsters();
 
             // Game logic
             // Този цикъл ще се изпълнява постоянно, докато играчът не натисне ESC
@@ -89,6 +97,12 @@ namespace MercentionPacman
 
         static void LoadMonsters()
         {
+            foreach (var item in monsterList)
+            {
+
+                Console.SetCursorPosition(item.X, item.Y);
+                Console.Write("0");
+            }
 
         }
 

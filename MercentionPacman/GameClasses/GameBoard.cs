@@ -12,7 +12,7 @@ namespace MercentionPacman.GameClasses
 
         // char[,] GameBoard
 
-        public static void  PrintGameBoard()
+        public static void PrintGameBoard()
         {
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.SetCursorPosition(5, 0);
@@ -25,7 +25,7 @@ namespace MercentionPacman.GameClasses
 
             string[,] board =
             {
-                
+
                     {"#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#"},
                     {"#"," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," ","#"," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," ","#"},
                     {"#"," "," ","#","#","#","#","#"," "," ","#","#","#","#","#","#"," ","#"," ","#","#","#","#","#","#"," "," ","#","#","#","#","#"," "," ","#"},
@@ -54,7 +54,7 @@ namespace MercentionPacman.GameClasses
                     {"#"," ","#","#","#","#","#","#","#","#","#","#","#","#","#","#"," ","#"," ","#","#","#","#","#","#","#","#","#","#","#","#","#","#"," ","#"},
                     {"#"," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," ","#"},
                     {"#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#"}
-                
+
             };
 
 
@@ -68,24 +68,24 @@ namespace MercentionPacman.GameClasses
             }
         }
 
-        public void ChangeElement(int height, int width, BoardElements newElement)
-        {
-            // switch (newElement)
-            // case Wall:
-            // GameBoard[height, width] = '#';
+        //public static void ChangeElement(int height, int width, BoardElements newElement)
+        //{
+        // switch (newElement)
+        // case Wall:
+        // GameBoard[height, width] = '#';
 
-            // case Dot:
-            // GameBoard[height, width] = '.';
-            // ...
-        }
-    }
-
-    enum BoardElements
-    {
-        Wall,
-        Dot,
-        Empty,
-        Pacman,
-        Monster
+        // case Dot:
+        // GameBoard[height, width] = '.';
+        // ...
     }
 }
+
+enum BoardElements
+{
+    Wall,
+    Dot,
+    Empty,
+    Pacman,
+    Monster
+}
+////}

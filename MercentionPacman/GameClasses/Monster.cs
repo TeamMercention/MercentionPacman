@@ -11,8 +11,29 @@ namespace MercentionPacman.GameClasses
         // public Position MonsterPosition { get; set; }
         // Текуща позиция
 
+        private Position monsterpos;
+        private DateTime lastMovedTime = DateTime.Now;
+        private string symbol = "0";
+        ConsoleColor[] PossibleCollor =
+        {
+            ConsoleColor.Red,
+            ConsoleColor.Green,
+            ConsoleColor.Blue,
+            ConsoleColor.Cyan
+        };
+        string[] PossibleDirection =
+        {
+            "up",
+            "down",
+            "left",
+            "right"
+        };
+
+
+
+
         // public char CurrentDirection { get; set; }
-        // Текуща посока
+        // Текуща посока        
 
         // public char NextDirection { get; set; }
         // Следваща посока (когато Monster-а достигне стена и трябва да смени посоката си,
