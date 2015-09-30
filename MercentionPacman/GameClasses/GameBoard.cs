@@ -12,6 +12,7 @@ namespace MercentionPacman.GameClasses
         // ...
 
         string[,] board =
+
             {
 
                     {"#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#"},
@@ -69,6 +70,9 @@ namespace MercentionPacman.GameClasses
                     this.board[height, width] = " ";
                     break;
             }
+
+
+
         }
     }
 

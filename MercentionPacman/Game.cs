@@ -1,11 +1,6 @@
 ﻿using MercentionPacman.GameClasses;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
-
 namespace MercentionPacman
 {
     class Game
@@ -21,13 +16,23 @@ namespace MercentionPacman
         // Monsters
         // List<Monster> monsterList = new List<Monster>();
         // ...
+        static Position[] monsterList =
+        {
+            new Position(33,12),
+            new Position(34,12),
+            new Position(35,12),
+            new Position(36,12)
+        };
 
         // Game Board
+
         static GameBoard board = new GameBoard();
+
 
         // Console Settings
         const int GameWidth = 75;
         const int GameHeight = 30;
+
         static int pos = 17;
 
         static void Main(string[] args)
@@ -40,6 +45,7 @@ namespace MercentionPacman
             Console.BufferHeight = GameHeight;
 
             RedrawBoard();
+
             // Load GUI
             // Ще определя позицията 
             // Към GameBoard ще се добавя отстрани и информация за точките до момента и животите, които остават.
@@ -49,6 +55,7 @@ namespace MercentionPacman
 
             // Load Monsters
             // Като горното, само че за Monster-и
+            LoadMonsters();
 
             // Game logic
             // Този цикъл ще се изпълнява постоянно, докато играчът не натисне ESC
@@ -110,6 +117,12 @@ namespace MercentionPacman
 
         static void LoadMonsters()
         {
+            foreach (var item in monsterList)
+            {
+
+                Console.SetCursorPosition(item.X, item.Y);
+                Console.Write("0");
+            }
 
         }
 
