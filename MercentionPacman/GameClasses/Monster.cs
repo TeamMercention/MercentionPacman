@@ -10,49 +10,176 @@ namespace MercentionPacman.GameClasses
     {
         // public Position MonsterPosition { get; set; }
         // Текуща позиция
+        //69 //28
+        private Position monsterPos;
+        public int prevPosX;
+        public int prevPosY;
+        //private DateTime lastMovedTime = DateTime.Now;
 
-        private Position monsterpos;
-        private DateTime lastMovedTime = DateTime.Now;
-        private string symbol = "0";
-        ConsoleColor[] PossibleCollor =
-        {
-            ConsoleColor.Red,
-            ConsoleColor.Green,
-            ConsoleColor.Blue,
-            ConsoleColor.Cyan
-        };
-        string[] PossibleDirection =
+        private string symbol = ((char)9787).ToString();
+        private ConsoleColor color;
+        public string Direction = "up";
+
+        public static string[] possibleDirections =
         {
             "up",
             "down",
             "left",
             "right"
         };
+        //private static string direction = possibleDirections[random.Next(0, possibleDirections.Length)];
+        public static Random random = new Random();
 
 
-
-
-        // public char CurrentDirection { get; set; }
-        // Текуща посока        
-
-        // public char NextDirection { get; set; }
-        // Следваща посока (когато Monster-а достигне стена и трябва да смени посоката си,
-        // играта ще задава новата посока чрез това поле)
-
-        // public int Counter { get; }
-        // Този брояч ще се използва, за да се забавя скоростта на Monster-ите.
-        // Например ако един while цикъл се изпълнява за 200 ms в Main метода,
-        // ако зададем на брояча да брои до 1, то Monster-а ще презкача един while цикъл
-        // и ще изпълнява действие на всеки 400 ms
-
-        // private int maxCounter = 1;
-        // Максимална граница на брояча, след достигането на която той ще се нулира
-
-        public Monster()
+        public Monster(ConsoleColor color, int x, int y)
         {
+
+            this.color = color;
+            this.monsterPos = new Position(x, y);
+            this.prevPosX = x;
+            this.prevPosY = y;
+
+
             // Създаване на нов Monster със стойности по подразбиране
             // ...
             // this.Counter = 0
         }
+
+        public bool CheckLeftCell(Monster[] monsterList, int x, int y, bool[,] border)
+        {
+            bool isEmpty = true;
+            foreach (var monster in monsterList)
+            {
+                if (x - 1 == monster.GetPosX() && y == monster.GetPosY())
+                {
+                    isEmpty = false;
+                    break;
+                }
+            }
+
+            if (!border[y, x - 1])
+            {
+                isEmpty = false;
+            }
+
+            return isEmpty;
+        }
+        public bool CheckRightCell(Monster[] monsterList, int x, int y, bool[,] border)
+        {
+            bool isEmpty = true;
+            foreach (var monster in monsterList)
+            {
+                if (x + 1 == monster.GetPosX() && y == monster.GetPosY())
+                {
+                    isEmpty = false;
+                    break;
+                }
+            }
+
+            if (!border[y, x + 1])
+            {
+                isEmpty = false;
+            }
+
+
+            return isEmpty;
+        }
+        public bool CheckUpCell(Monster[] monsterList, int x, int y, bool[,] border)
+        {
+            bool isEmpty = true;
+            foreach (var monster in monsterList)
+            {
+                if (x == monster.GetPosX() && y - 1 == monster.GetPosY())
+                {
+                    isEmpty = false;
+                    break;
+                }
+            }
+
+            if (!border[y - 1, x])
+            {
+                isEmpty = false;
+            }
+
+            return isEmpty;
+        }
+        public bool CheckDownCell(Monster[] monsterList, int x, int y, bool[,] border)
+        {
+            bool isEmpty = true;
+            foreach (var monster in monsterList)
+            {
+                if (x == monster.GetPosX() && y + 1 == monster.GetPosY())
+                {
+                    isEmpty = false;
+                }
+            }
+
+            if (!border[y + 1, x])
+            {
+                isEmpty = false;
+            }
+
+            return isEmpty;
+        }
+        public string GetSymbol()
+
+        {
+            return this.symbol;
+        }
+        public int GetPosX()
+        {
+            return this.monsterPos.X;
+
+        }
+        public int GetPosY()
+        {
+            return this.monsterPos.Y;
+        }
+        public ConsoleColor GetColor()
+        {
+            return this.color;
+        }
+        public void EraseMonster()
+        {
+            Console.SetCursorPosition(prevPosX, prevPosY);
+            Console.Write(' ');
+        }
+        public void MoveRight()
+        {
+            if (monsterPos.X + 1 < 69)
+            {
+                prevPosX = monsterPos.X;
+                prevPosY = monsterPos.Y;
+                monsterPos.X++;
+            }
+        }
+        public void MoveLeft()
+        {
+            if (monsterPos.X - 1 > 1)
+            {
+                prevPosX = monsterPos.X;
+                prevPosY = monsterPos.Y;
+                monsterPos.X--;
+            }
+        }
+        public void MoveDown()
+        {
+            if (monsterPos.Y + 1 < 28)
+            {
+                prevPosX = monsterPos.X;
+                prevPosY = monsterPos.Y;
+                monsterPos.Y++;
+            }
+        }
+        public void MoveUp()
+        {
+            if (monsterPos.Y - 1 > 1)
+            {
+                prevPosX = monsterPos.X;
+                prevPosY = monsterPos.Y;
+                monsterPos.Y--;
+            }
+        }
+
     }
 }
