@@ -6,27 +6,16 @@ using System.Threading.Tasks;
 
 namespace MercentionPacman.GameClasses
 {
-    public static class GameBoard
+    public class GameBoard
     {
-        // Game Board-ът ще е матрица от char-ове, които представляват нивото на Pacman
+        private static string pacmanIcon = "O";
+        // ...
 
-        // char[,] GameBoard
+        string[,] board =
 
-        public static void PrintGameBoard()
-        {
-            Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.SetCursorPosition(5, 0);
-            Console.Write("Score: ");
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.SetCursorPosition(20, 0);
-            Console.Write("Lives: ");
-            Console.ForegroundColor = ConsoleColor.White;
-            Console.WriteLine();
-
-            string[,] board =
             {
 
-                   {"#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#"},
+                    {"#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#"},
                     {"#","*",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".","#",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".","*","#"},
                     {"#",".",".","#","#","#","#","#",".",".","#","#","#","#","#","#",".","#",".","#","#","#","#","#","#",".",".","#","#","#","#","#",".",".","#"},
                     {"#",".",".","#"," "," "," ","#",".",".","#"," "," "," "," ","#",".","#",".","#"," "," "," "," ","#",".",".","#"," "," "," ","#",".",".","#"},
@@ -57,35 +46,42 @@ namespace MercentionPacman.GameClasses
 
             };
 
-
-            for (int i = 0; i < board.GetLength(0); i++)
-            {
-                for (int j = 0; j < board.GetLength(1); j++)
-                {
-                    Console.Write("{0,2}", board[i, j]);
-                }
-                Console.WriteLine();
-            }
+        public string[,] GetBoard
+        {
+            get { return board; }
         }
 
-        //public static void ChangeElement(int height, int width, BoardElements newElement)
-        //{
-        // switch (newElement)
-        // case Wall:
-        // GameBoard[height, width] = '#';
+        public void ChangeElement(int height, int width, BoardElements newElement)
+        {
+            // switch (newElement)
+            // case Wall:
+            // GameBoard[height, width] = '#';
 
-        // case Dot:
-        // GameBoard[height, width] = '.';
-        // ...
+            // case Dot:
+            // GameBoard[height, width] = '.';
+            // ...
+
+            switch (newElement)
+            {
+                case BoardElements.Pacman:
+                    this.board[height, width] = pacmanIcon;
+                    break;
+                case BoardElements.Empty:
+                    this.board[height, width] = " ";
+                    break;
+            }
+
+
+
+        }
+    }
+
+    public enum BoardElements
+    {
+        Wall,
+        Dot,
+        Empty,
+        Pacman,
+        Monster
     }
 }
-
-enum BoardElements
-{
-    Wall,
-    Dot,
-    Empty,
-    Pacman,
-    Monster
-}
-////}
