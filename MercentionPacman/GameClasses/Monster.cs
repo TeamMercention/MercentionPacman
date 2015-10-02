@@ -173,7 +173,7 @@ namespace MercentionPacman.GameClasses
         }
         public void MoveUp()
         {
-            if (monsterPos.Y - 1 > 1)
+            if (monsterPos.Y - 1 > 0)
             {
                 prevPosX = monsterPos.X;
                 prevPosY = monsterPos.Y;

@@ -18,7 +18,7 @@ namespace MercentionPacman
         // ...
         static Monster[] monsterList =
         {
-            new Monster(ConsoleColor.Red,15,12),
+            new Monster(ConsoleColor.Red,15,8),
             new Monster(ConsoleColor.Cyan,16,12),
             new Monster(ConsoleColor.Magenta,17,12),
             new Monster(ConsoleColor.DarkCyan,18,12),
@@ -177,10 +177,24 @@ namespace MercentionPacman
                 Console.ForegroundColor = monster.GetColor();
                 Console.SetCursorPosition(monster.GetPosX(), monster.GetPosY());
                 Console.Write(monster.GetSymbol());
+                Console.ForegroundColor = ConsoleColor.White;
                 if (monster.GetPosX() != monster.prevPosX || monster.GetPosY() != monster.prevPosY)
                 {
-                    Console.SetCursorPosition(monster.prevPosX, monster.prevPosY);
-                    Console.Write(' ');
+                    if (border[monster.prevPosY, monster.prevPosX] == " ")
+                    {
+                        Console.SetCursorPosition(monster.prevPosX, monster.prevPosY);
+                        Console.Write(' ');
+                    }
+                    else if(border[monster.prevPosY,monster.prevPosX] == ".")
+                    {
+                        Console.SetCursorPosition(monster.prevPosX, monster.prevPosY);
+                        Console.Write('.');
+                    }
+                    else if(border[monster.prevPosY,monster.prevPosX] == "*")
+                    {
+                        Console.SetCursorPosition(monster.prevPosX, monster.prevPosY);
+                        Console.Write('*');
+                    }
                 }
             }
 
