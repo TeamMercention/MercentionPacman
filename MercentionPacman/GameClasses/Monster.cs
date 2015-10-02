@@ -45,7 +45,7 @@ namespace MercentionPacman.GameClasses
             // this.Counter = 0
         }
 
-        public bool CheckLeftCell(Monster[] monsterList, int x, int y, bool[,] border)
+        public bool CheckLeftCell(Monster[] monsterList, int x, int y, string[,] border)
         {
             bool isEmpty = true;
             foreach (var monster in monsterList)
@@ -57,14 +57,14 @@ namespace MercentionPacman.GameClasses
                 }
             }
 
-            if (!border[y, x - 1])
+            if (border[y, x - 1] == "#")
             {
                 isEmpty = false;
             }
 
             return isEmpty;
         }
-        public bool CheckRightCell(Monster[] monsterList, int x, int y, bool[,] border)
+        public bool CheckRightCell(Monster[] monsterList, int x, int y, string[,] border)
         {
             bool isEmpty = true;
             foreach (var monster in monsterList)
@@ -76,7 +76,7 @@ namespace MercentionPacman.GameClasses
                 }
             }
 
-            if (!border[y, x + 1])
+            if (border[y, x + 1] == "#")
             {
                 isEmpty = false;
             }
@@ -84,7 +84,7 @@ namespace MercentionPacman.GameClasses
 
             return isEmpty;
         }
-        public bool CheckUpCell(Monster[] monsterList, int x, int y, bool[,] border)
+        public bool CheckUpCell(Monster[] monsterList, int x, int y, string[,] border)
         {
             bool isEmpty = true;
             foreach (var monster in monsterList)
@@ -96,14 +96,14 @@ namespace MercentionPacman.GameClasses
                 }
             }
 
-            if (!border[y - 1, x])
+            if (border[y - 1, x] == "#")
             {
                 isEmpty = false;
             }
 
             return isEmpty;
         }
-        public bool CheckDownCell(Monster[] monsterList, int x, int y, bool[,] border)
+        public bool CheckDownCell(Monster[] monsterList, int x, int y, string[,] border)
         {
             bool isEmpty = true;
             foreach (var monster in monsterList)
@@ -114,7 +114,7 @@ namespace MercentionPacman.GameClasses
                 }
             }
 
-            if (!border[y + 1, x])
+            if (border[y + 1, x] == "#")
             {
                 isEmpty = false;
             }
@@ -129,7 +129,7 @@ namespace MercentionPacman.GameClasses
         public int GetPosX()
         {
             return this.monsterPos.X;
-
+        
         }
         public int GetPosY()
         {
@@ -146,7 +146,7 @@ namespace MercentionPacman.GameClasses
         }
         public void MoveRight()
         {
-            if (monsterPos.X + 1 < 69)
+            if (monsterPos.X + 1 < 34)
             {
                 prevPosX = monsterPos.X;
                 prevPosY = monsterPos.Y;
@@ -155,7 +155,7 @@ namespace MercentionPacman.GameClasses
         }
         public void MoveLeft()
         {
-            if (monsterPos.X - 1 > 1)
+            if (monsterPos.X - 1 > 0)
             {
                 prevPosX = monsterPos.X;
                 prevPosY = monsterPos.Y;

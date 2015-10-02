@@ -11,7 +11,7 @@ namespace MercentionPacman.GameClasses
         private static string pacmanIcon = "O";
         // ...
 
-        string[,] board =
+      public  string[,] board =
 
             {
 
