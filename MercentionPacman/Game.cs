@@ -31,7 +31,7 @@ namespace MercentionPacman
         static string[,] border = board.GetBoard;
 
         // Console Settings
-        const int GameWidth = 75;
+        const int GameWidth = 70;
         const int GameHeight = 29;
 
         static void Main(string[] args)
@@ -220,17 +220,17 @@ namespace MercentionPacman
             RedrawBoard();
 
             int horizontalPos = GameHeight / 2 - 2;
-            int verticalPos = GameWidth / 2 - 20;
+            int verticalPos = GameWidth / 2 - 15;
 
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.SetCursorPosition(verticalPos, horizontalPos);
-            Console.WriteLine("|{0}|", new string('-', 31));
+            Console.WriteLine("|{0}|", new string('-', 28));
             Console.SetCursorPosition(verticalPos, horizontalPos + 1);
-            Console.WriteLine("||\tPRESS X TO START\t||");
+            Console.WriteLine("||     PRESS X TO START     ||");
             Console.SetCursorPosition(verticalPos, horizontalPos + 2);
-            Console.WriteLine("||\tPRESS ESC TO EXIT\t||");
+            Console.WriteLine("||     PRESS ESC TO EXIT    ||");
             Console.SetCursorPosition(verticalPos, horizontalPos + 3);
-            Console.WriteLine("|{0}|", new string('-', 31));
+            Console.WriteLine("|{0}|", new string('-', 28));
             Console.ForegroundColor = ConsoleColor.White;
 
             ConsoleKeyInfo keyPressed = Console.ReadKey(true);
