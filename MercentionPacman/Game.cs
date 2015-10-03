@@ -11,6 +11,9 @@ namespace MercentionPacman
         // Global Declarations
 
         static Random random = new Random();
+        static bool gamePaused = false;
+        static bool pausedTextIsShown = false;
+        static bool continueLoop = true;
 
         // Player
         // Pacman pacman = new Pacman();
@@ -48,6 +51,7 @@ namespace MercentionPacman
 
             RedrawBoard();
             LoadGUI();
+
             // Load Player
             // Задава позиция на Pacman. Променя тази позиция на GameBoard-а с иконката на Pacman.
 
@@ -57,13 +61,44 @@ namespace MercentionPacman
 
             // Game logic
             // Този цикъл ще се изпълнява постоянно, докато играчът не натисне ESC
-            while (true)
+            while (continueLoop)
             {
 
                 // Read User Key
                 // Проверява дали има натиснат бутон от клавиатурата
                 // Ако има - добавя го в pacman.NextDirection
                 // ESC = изход, P = пауза
+                if (Console.KeyAvailable)
+                {
+                    switch (Console.ReadKey(true).Key)
+                    {
+                        case ConsoleKey.Escape:
+                            continueLoop = false; // Прекъсва while цикъла
+                            break;
+                        case ConsoleKey.P:
+                            SetGamePaused();
+                            break;
+                        case ConsoleKey.UpArrow:
+                            // Променя Pacman NextDirection
+                            break;
+                        case ConsoleKey.DownArrow:
+                            // Променя Pacman NextDirection
+                            break;
+                        case ConsoleKey.LeftArrow:
+                            // Променя Pacman NextDirection
+                            break;
+                        case ConsoleKey.RightArrow:
+                            // Променя Pacman NextDirection
+                            break;
+                    }
+                }
+
+                // Check if paused
+                if (gamePaused)
+                {
+                    BlinkPausedText();
+                    continue;
+                }
 
                 // Player Movement
                 // Проверява дали е възможно да се премести в зададената посока (дали има стена).
@@ -74,7 +109,7 @@ namespace MercentionPacman
 
                 // Monster Ai
                 MonsterAi();
-                
+
                 Thread.Sleep(200); // Определя скоростта на играта, ще го променяме ако трябва
             }
 
@@ -152,6 +187,55 @@ namespace MercentionPacman
         static void ReadUserKey()
         {
 
+        }
+
+        static void SetGamePaused()
+        {
+            switch (gamePaused)
+            {
+                case false:
+                    ShowPausedText(true);
+                    break;
+                case true:
+                    ShowPausedText(false);
+                    break;
+            }
+
+            gamePaused = gamePaused ? false : true;
+        }
+
+        static void BlinkPausedText()
+        {
+            switch (pausedTextIsShown)
+            {
+                case true:
+                    Thread.Sleep(800);
+                    ShowPausedText(false);
+                    break;
+                case false:
+                    Thread.Sleep(800);
+                    ShowPausedText(true);
+                    break;
+            }
+        }
+
+        static void ShowPausedText(bool showText)
+        {
+            switch (showText)
+            {
+                case true:
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    Console.SetCursorPosition(47, GameHeight - 2);
+                    Console.Write("PAUSED");
+                    pausedTextIsShown = true;
+                    break;
+                case false:
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.SetCursorPosition(47, GameHeight - 2);
+                    Console.Write("      ");
+                    pausedTextIsShown = false;
+                    break;
+            }
         }
 
         static void PlayerMovement()
