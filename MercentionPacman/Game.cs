@@ -19,7 +19,7 @@ namespace MercentionPacman
         {
 
             SoundPlayer PacManMusic = new SoundPlayer(MercentionPacman.PacManMusic.pacman_beginning);
-            PacManMusic.PlayLooping();
+            PacManMusic.Play();
 
         }
         // Global Declarations
@@ -51,7 +51,7 @@ namespace MercentionPacman
 
         // Console Settings
         const int GameWidth = 75;
-        const int GameHeight = 30;
+        const int GameHeight = 29;
 
         static int pos = 17;
 
@@ -65,11 +65,9 @@ namespace MercentionPacman
             Console.WindowHeight = GameHeight;
             Console.BufferHeight = GameHeight;
 
-            RedrawBoard();
+            ShowWelcomeMenu();
 
-            // Load GUI
-            // Ще определя позицията
-            // Към GameBoard ще се добавя отстрани и информация за точките до момента и животите, които остават.
+            RedrawBoard();
 
             // Load Player
             // Задава позиция на Pacman. Променя тази позиция на GameBoard-а с иконката на Pacman.
@@ -203,12 +201,12 @@ namespace MercentionPacman
                         Console.SetCursorPosition(monster.prevPosX, monster.prevPosY);
                         Console.Write(' ');
                     }
-                    else if(border[monster.prevPosY,monster.prevPosX] == ".")
+                    else if (border[monster.prevPosY, monster.prevPosX] == ".")
                     {
                         Console.SetCursorPosition(monster.prevPosX, monster.prevPosY);
                         Console.Write('.');
                     }
-                    else if(border[monster.prevPosY,monster.prevPosX] == "*")
+                    else if (border[monster.prevPosY, monster.prevPosX] == "*")
                     {
                         Console.SetCursorPosition(monster.prevPosX, monster.prevPosY);
                         Console.Write('*');
@@ -249,6 +247,38 @@ namespace MercentionPacman
 
         }
 
+        static void ShowWelcomeMenu()
+        {
+            RedrawBoard();
+
+            int horizontalPos = GameHeight / 2 - 2;
+            int verticalPos = GameWidth / 2 - 20;
+
+            Console.SetCursorPosition(verticalPos, horizontalPos);
+            Console.WriteLine("|{0}|", new string('-', 31));
+            Console.SetCursorPosition(verticalPos, horizontalPos + 1);
+            Console.WriteLine("||\tPRESS X TO START\t||");
+            Console.SetCursorPosition(verticalPos, horizontalPos + 2);
+            Console.WriteLine("||\tPRESS ESC TO EXIT\t||");
+            Console.SetCursorPosition(verticalPos, horizontalPos + 3);
+            Console.WriteLine("|{0}|", new string('-', 31));
+
+            ConsoleKeyInfo keyPressed = Console.ReadKey(true);
+            while (true)
+            {
+                if (keyPressed.Key == ConsoleKey.Escape)
+                {
+                    Environment.Exit(0);
+                }
+                else if (keyPressed.Key == ConsoleKey.X)
+                {
+                    Console.Clear();
+                    break;
+                }
+
+                keyPressed = Console.ReadKey(true);
+            }
+        }
 
         static void GameOver()
         {
