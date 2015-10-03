@@ -1,10 +1,27 @@
 ﻿using MercentionPacman.GameClasses;
 using System;
+using System.Threading.Tasks;
+using System.Media;
 using System.Threading;
+
 namespace MercentionPacman
 {
     class Game
     {
+
+
+        public static void PlayMusic()
+        {
+            Task.Factory.StartNew(() => Music());
+        }
+
+        public static void Music()
+        {
+
+            SoundPlayer PacManMusic = new SoundPlayer(MercentionPacman.PacManMusic.pacman_beginning);
+            PacManMusic.PlayLooping();
+
+        }
         // Global Declarations
 
         static Random random = new Random();
@@ -40,6 +57,7 @@ namespace MercentionPacman
 
         static void Main(string[] args)
         {
+            PlayMusic();
             Console.CursorVisible = false;
             Console.Title = "Mercention Pacman";
             Console.WindowWidth = GameWidth;
@@ -137,7 +155,7 @@ namespace MercentionPacman
                 // Ще изобразява всички настъпили промени в board-а от по-горните методи на екрана.
                 // Към него ще се изпълнява пак LoadGUI(), за да добави отстрани точките и животите.
                 //break;
-                Thread.Sleep(50); // Определя скоростта на играта, ще го променяме ако трябва
+                Thread.Sleep(200); // Определя скоростта на играта, ще го променяме ако трябва
             }
 
             GameOver();
