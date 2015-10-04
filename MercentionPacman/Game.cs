@@ -16,13 +16,14 @@ namespace MercentionPacman
         static bool continueLoop = true;
 
         // Player
-        // Pacman pacman = new Pacman();
+        
         // ...
 
         // Monsters
         static Monster[] monsterList =
         {
             new Monster(ConsoleColor.Red,15,8),
+
             new Monster(ConsoleColor.Cyan,16,12),
             new Monster(ConsoleColor.Magenta,17,12),
             new Monster(ConsoleColor.DarkCyan,18,12),
@@ -39,6 +40,7 @@ namespace MercentionPacman
 
         static void Main(string[] args)
         {
+            PacMan pacman = new PacMan(ConsoleColor.Yellow, 17, 20);
             Console.CursorVisible = false;
             Console.Title = "Mercention Pacman";
             Console.WindowWidth = GameWidth;
@@ -54,7 +56,10 @@ namespace MercentionPacman
 
             // Load Player
             // Задава позиция на Pacman. Променя тази позиция на GameBoard-а с иконката на Pacman.
-
+            Console.SetCursorPosition(pacman.GetPosX(), pacman.GetPosY());
+            Console.ForegroundColor = pacman.GetColor();
+            Console.Write(pacman.GetSymbol());
+            //LoadPlayer();
             // Load Monsters
             // Като горното, само че за Monster-и
             LoadMonsters();
@@ -79,15 +84,19 @@ namespace MercentionPacman
                             SetGamePaused();
                             break;
                         case ConsoleKey.UpArrow:
+                            pacman.NextDirection = "up";
                             // Променя Pacman NextDirection
                             break;
                         case ConsoleKey.DownArrow:
+                            pacman.NextDirection = "down";
                             // Променя Pacman NextDirection
                             break;
                         case ConsoleKey.LeftArrow:
+                            pacman.NextDirection = "left";
                             // Променя Pacman NextDirection
                             break;
                         case ConsoleKey.RightArrow:
+                            pacman.NextDirection = "right";
                             // Променя Pacman NextDirection
                             break;
                     }
@@ -106,7 +115,10 @@ namespace MercentionPacman
                 // Ако pacman.NextDirection != pacman.CurrentDirection
                 // го премества в новата посока - променя PacmanPosition
                 // Записва промените в GameBoard-a
-
+                if (pacman.Direction == pacman.NextDirection)
+                {
+                    
+                }
                 // Monster Ai
                 MonsterAi();
 
@@ -158,6 +170,7 @@ namespace MercentionPacman
         {
             foreach (var monster in monsterList)
             {
+
                 Console.ForegroundColor = monster.GetColor();
                 Console.SetCursorPosition(monster.GetPosX(), monster.GetPosY());
                 Console.Write(monster.GetSymbol());
@@ -186,7 +199,7 @@ namespace MercentionPacman
 
         static void ReadUserKey()
         {
-
+            
         }
 
         static void SetGamePaused()
