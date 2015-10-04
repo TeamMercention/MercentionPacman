@@ -38,7 +38,7 @@ namespace MercentionPacman.GameClasses
         {
 
         }
-        public void LostLife()
+        public void LoseLife()
         {
             // this.Lives--;
         }

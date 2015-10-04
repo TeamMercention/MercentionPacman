@@ -80,6 +80,7 @@ namespace MercentionPacman.GameClasses
     {
         Wall,
         Dot,
+        Star,
         Empty,
         Pacman,
         Monster

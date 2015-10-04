@@ -16,6 +16,7 @@ namespace MercentionPacman
         static bool continueLoop = true;
 
         // Player
+        static PacMan pacman = new PacMan();
         
         // ...
 
@@ -40,7 +41,7 @@ namespace MercentionPacman
 
         static void Main(string[] args)
         {
-            PacMan pacman = new PacMan(ConsoleColor.Yellow, 17, 20);
+            //PacMan pacman = new PacMan(ConsoleColor.Yellow, 17, 20);
             Console.CursorVisible = false;
             Console.Title = "Mercention Pacman";
             Console.WindowWidth = GameWidth;
@@ -115,9 +116,48 @@ namespace MercentionPacman
                 // Ако pacman.NextDirection != pacman.CurrentDirection
                 // го премества в новата посока - променя PacmanPosition
                 // Записва промените в GameBoard-a
-                if (pacman.Direction == pacman.NextDirection)
+               switch (pacman.CheckCell(border, pacman.NextDirection))
                 {
-                    
+                    case BoardElements.Dot:
+                        MovePlayer(pacman.NextDirection);
+                        pacman.EarnPoint();
+                        pacman.Direction = pacman.NextDirection;
+                        break;
+                    case BoardElements.Star:
+                        MovePlayer(pacman.NextDirection);
+                        pacman.EarnStar();
+                        pacman.Direction = pacman.NextDirection;
+                        break;
+                    case BoardElements.Empty:
+                        MovePlayer(pacman.NextDirection);
+                        pacman.Direction = pacman.NextDirection;
+                        break;
+                    case BoardElements.Monster:
+                        pacman.LoseLife();
+                        MovePlayer("reset");
+                        break;
+                    case BoardElements.Wall:
+                        switch (pacman.CheckCell(border, pacman.Direction))
+                        {
+                            case BoardElements.Dot:
+                                MovePlayer(pacman.Direction);
+                                pacman.EarnPoint();
+                                break;
+                            case BoardElements.Star:
+                                MovePlayer(pacman.Direction);
+                                pacman.EarnStar();
+                                break;
+                            case BoardElements.Empty:
+                                MovePlayer(pacman.Direction);
+                                break;
+                            case BoardElements.Monster:
+                                pacman.LoseLife();
+                                MovePlayer("reset");
+                                break;
+                            case BoardElements.Wall:
+                                break;
+                        }
+                        break;
                 }
                 // Monster Ai
                 MonsterAi();
@@ -254,6 +294,52 @@ namespace MercentionPacman
         static void PlayerMovement()
         {
 
+        }
+        static void MovePlayer(string direction)
+        {
+            switch (direction)
+            {
+                case "up":
+                    Console.SetCursorPosition(pacman.GetPosX(), pacman.GetPosY());
+                    Console.Write(" ");
+                    Console.SetCursorPosition(pacman.GetPosX(), pacman.GetPosY() - 1);
+                    Console.ForegroundColor = pacman.GetColor();
+                    Console.Write(pacman.GetSymbol());
+                    pacman.MoveUp();
+                    break;
+                case "right":
+                    Console.SetCursorPosition(pacman.GetPosX(), pacman.GetPosY());
+                    Console.Write(" ");
+                    Console.SetCursorPosition(pacman.GetPosX() + 1, pacman.GetPosY());
+                    Console.ForegroundColor = pacman.GetColor();
+                    Console.Write(pacman.GetSymbol());
+                    pacman.MoveRight();
+                    break;
+                case "down":
+                    Console.SetCursorPosition(pacman.GetPosX(), pacman.GetPosY());
+                    Console.Write(" ");
+                    Console.SetCursorPosition(pacman.GetPosX(), pacman.GetPosY() + 1);
+                    Console.ForegroundColor = pacman.GetColor();
+                    Console.Write(pacman.GetSymbol());
+                    pacman.MoveDown();
+                    break;
+                case "left":
+                    Console.SetCursorPosition(pacman.GetPosX(), pacman.GetPosY());
+                    Console.Write(" ");
+                    Console.SetCursorPosition(pacman.GetPosX() - 1, pacman.GetPosY());
+                    Console.ForegroundColor = pacman.GetColor();
+                    Console.Write(pacman.GetSymbol());
+                    pacman.MoveLeft();
+                    break;
+                case "reset":
+                    Console.SetCursorPosition(pacman.GetPosX(), pacman.GetPosY());
+                    Console.Write(" ");
+                    pacman.ResetPacMan();
+                    Console.SetCursorPosition(pacman.GetPosX(), pacman.GetPosY());
+                    Console.ForegroundColor = pacman.GetColor();
+                    Console.Write(pacman.GetSymbol());
+                    break;
+            }
         }
 
         static void MonsterAi()
