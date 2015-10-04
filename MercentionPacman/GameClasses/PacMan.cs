@@ -10,30 +10,34 @@ namespace MercentionPacman.GameClasses
     {
         //public Position PacmanPosition { get; set; }
         // Текуща позиция
+
         private Position pacManPos;
-        public int prevPosX;
-        public int prevPosY;
+
         // public char CurrentDirection { get; set; }
         // Текуща посока
+
         private string symbol = ((char)67).ToString();
-        private ConsoleColor color;
+        private ConsoleColor color = ConsoleColor.Yellow;
         public string Direction = "right";
         public string NextDirection = "right";
+
         // public char NextDirection { get; set; }
         // Следваща посока (ако има натиснат различен бутон от клавиатурата)
 
         //public int Lives { get; }
         //public int Score { get; }
 
-        public PacMan(ConsoleColor color, int x, int y)
+        public PacMan()
         {
-            this.color = color;
-            this.pacManPos = new Position(x, y);
-            this.prevPosX = x;
-            this.prevPosY = y;
+            this.pacManPos = new Position(17, 20);
+
             // Създаване на нов PacMan със стойности по подразбиране
         }
 
+        public void ResetPacMan()
+        {
+
+        }
         public void LostLife()
         {
             // this.Lives--;
@@ -42,6 +46,10 @@ namespace MercentionPacman.GameClasses
         public void EarnPoint()
         {
             //this.Score++;
+        }
+        public void EarnStar()
+        {
+            //this.Score += 100;
         }
         public string GetSymbol()
         {
@@ -60,90 +68,80 @@ namespace MercentionPacman.GameClasses
             return this.color;
         }
 
-        public BoardElements CheckRightCell(string[,] border)
+        public BoardElements CheckCell(string[,] border, string direction)
         {
-          
-            switch (border[this.pacManPos.Y, this.pacManPos.X + 1])
+            switch (direction)
             {
-                case "#":
-                    return BoardElements.Wall;
-                    break;
-                case ".":
-                    return BoardElements.Dot;
-                    break;
-                    
-               case "☻":
-                    return BoardElements.Monster;
-                    break;
-            }
-            return BoardElements.Empty;
-        }
-        public BoardElements CheckLeftCell(string[,] border)
-        {
-            switch (border[this.pacManPos.Y, this.pacManPos.X - 1])
-            {
-                case "#":
-                    return BoardElements.Wall;
-                    break;
-                case ".":
-                    return BoardElements.Dot;
-                    break;
-                    
-               case "☻":
-                    return BoardElements.Monster;
-                    break;
-            }
-            return BoardElements.Empty;
-        }
-        public BoardElements CheckUpperCell(string[,] border)
-        {
-            switch (border[this.pacManPos.Y - 1, this.pacManPos.X])
-            {
-               case "#":
-                    return BoardElements.Wall;
-                    break;
-                case ".":
-                    return BoardElements.Dot;
-                    break;
-                    
-               case "☻":
-                    return BoardElements.Monster;
-                    break;
-            }
-            return BoardElements.Empty;
-        }
-        public BoardElements CheckLowerCell(string[,] border)
-        {
-            switch (border[this.pacManPos.Y + 1, this.pacManPos.X])
-            {
-              case "#":
-                    return BoardElements.Wall;
-                    break;
-                case ".":
-                    return BoardElements.Dot;
-                    break;
-                    
-               case "☻":
-                    return BoardElements.Monster;
-                    break;
+                case "up":
+                    switch (border[this.pacManPos.Y - 1, this.pacManPos.X])
+                    {
+                        case "#":
+                            return BoardElements.Wall;
+                        case ".":
+                            return BoardElements.Dot;
+                        case "*":
+                            return BoardElements.Star;
+                        case "☻":
+                            return BoardElements.Monster;
+                    }
+                    return BoardElements.Empty;
+                case "right":
+                    switch (border[this.pacManPos.Y, this.pacManPos.X + 1])
+                    {
+                        case "#":
+                            return BoardElements.Wall;
+                        case ".":
+                            return BoardElements.Dot;
+                        case "*":
+                            return BoardElements.Star;
+                        case "☻":
+                            return BoardElements.Monster;
+                    }
+                    return BoardElements.Empty;
+                case "down":
+                    switch (border[this.pacManPos.Y + 1, this.pacManPos.X])
+                    {
+                        case "#":
+                            return BoardElements.Wall;
+                        case ".":
+                            return BoardElements.Dot;
+                        case "*":
+                            return BoardElements.Star;
+                        case "☻":
+                            return BoardElements.Monster;
+                    }
+                    return BoardElements.Empty;
+                case "left":
+                    switch (border[this.pacManPos.Y, this.pacManPos.X - 1])
+                    {
+                        case "#":
+                            return BoardElements.Wall;
+                        case ".":
+                            return BoardElements.Dot;
+                        case "*":
+                            return BoardElements.Star;
+                        case "☻":
+                            return BoardElements.Monster;
+                    }
+                    return BoardElements.Empty;
             }
             return BoardElements.Empty;
         }
         public void MoveUp()
         {
-
+            this.pacManPos.Y -= 1;
         }
         public void MoveDown()
         {
-
+            this.pacManPos.Y += 1;
         }
         public void MoveLeft()
         {
-
+            this.pacManPos.X -= 1;
         }
         public void MoveRight()
         {
-
+            this.pacManPos.X += 1;
         }
     }
 }
