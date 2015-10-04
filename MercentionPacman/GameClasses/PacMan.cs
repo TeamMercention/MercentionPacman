@@ -24,12 +24,22 @@ namespace MercentionPacman.GameClasses
         // public char NextDirection { get; set; }
         // Следваща посока (ако има натиснат различен бутон от клавиатурата)
 
-        //public int Lives { get; }
-        //public int Score { get; }
+        private int score;
+        private int lives;
 
+        public int GetScore()
+        {
+            return this.score;
+        }
+        public int Lives()
+        {
+            return this.lives;
+        }
         public PacMan()
         {
             this.pacManPos = new Position(17, 20);
+            this.score = 0;
+            this.lives = 3;
 
             // Създаване на нов PacMan със стойности по подразбиране
         }
@@ -40,7 +50,7 @@ namespace MercentionPacman.GameClasses
         }
         public void LoseLife()
         {
-            // this.Lives--;
+            this.lives--;
         }
 
         public void EarnPoint()
