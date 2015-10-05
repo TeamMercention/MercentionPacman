@@ -407,13 +407,13 @@ namespace MercentionPacman
 
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.SetCursorPosition(verticalPos, horizontalPos);
-            Console.WriteLine("|{0}|", new string('-', 28));
+            Console.Write("|{0}|", new string('-', 28));
             Console.SetCursorPosition(verticalPos, horizontalPos + 1);
-            Console.WriteLine("||     PRESS X TO START     ||");
+            Console.Write("||     PRESS X TO START     ||");
             Console.SetCursorPosition(verticalPos, horizontalPos + 2);
-            Console.WriteLine("||     PRESS ESC TO EXIT    ||");
+            Console.Write("||     PRESS ESC TO EXIT    ||");
             Console.SetCursorPosition(verticalPos, horizontalPos + 3);
-            Console.WriteLine("|{0}|", new string('-', 28));
+            Console.Write("|{0}|", new string('-', 28));
             Console.ForegroundColor = ConsoleColor.White;
 
             ConsoleKeyInfo keyPressed = Console.ReadKey(true);
@@ -435,7 +435,37 @@ namespace MercentionPacman
 
         static void GameOver()
         {
+            Console.Clear();
+            RedrawBoard();
 
+            int horizontalPos = GameHeight / 2 - 2;
+            int verticalPos = GameWidth / 2 - 15;
+
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.SetCursorPosition(verticalPos, horizontalPos);
+            Console.Write("|{0}|", new string('-', 27));
+            Console.SetCursorPosition(verticalPos, horizontalPos + 1);
+            Console.Write("||        GAME OVER        ||");
+            Console.SetCursorPosition(verticalPos, horizontalPos + 2);
+            Console.Write("||                         ||");
+            Console.SetCursorPosition(verticalPos, horizontalPos + 3);
+            int score = pacman.GetScore();
+            Console.Write("||       SCORE: {0}{1}  ||", score, new string(' ', 9 - score.ToString().Length));
+            Console.SetCursorPosition(verticalPos, horizontalPos + 4);
+            Console.Write("|{0}|", new string('-', 27));
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.SetCursorPosition(0, GameHeight - 1);
+
+            ConsoleKeyInfo keyPressed = Console.ReadKey(true);
+            while (true)
+            {
+                if (keyPressed.Key == ConsoleKey.Escape)
+                {
+                    Environment.Exit(0);
+                }
+
+                keyPressed = Console.ReadKey(true);
+            }
         }
 
         static void WinGame()
