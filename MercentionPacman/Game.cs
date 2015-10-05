@@ -80,6 +80,7 @@ namespace MercentionPacman
                     {
                         case ConsoleKey.Escape:
                             continueLoop = false; // Прекъсва while цикъла
+                            GameOver();
                             break;
                         case ConsoleKey.P:
                             SetGamePaused();
@@ -164,10 +165,12 @@ namespace MercentionPacman
                 // Monster Ai
                 MonsterAi();
 
+                CheckIfNoLives();
+
+                CheckScore();
+
                 Thread.Sleep(200); // Определя скоростта на играта, ще го променяме ако трябва
             }
-
-            GameOver();
         }
 
         static void LoadGUI()
@@ -392,6 +395,25 @@ namespace MercentionPacman
             }
         }
 
+        static void CheckScore()
+        {
+            if (pacman.GetScore() == 684)
+            {
+                continueLoop = false;
+                WinGame();
+            }
+        }
+
+        static void CheckIfNoLives()
+        {
+            if (pacman.Lives() < 0)
+            {
+                continueLoop = false;
+                GameOver();
+            }
+
+        }
+
         static void RedrawBoard()
         {
             for (int i = 0; i < board.GetBoard.GetLength(0); i++)
@@ -481,7 +503,41 @@ namespace MercentionPacman
 
         static void WinGame()
         {
+            Console.Clear();
+            RedrawBoard();
 
+            int horizontalPos = GameHeight / 2 - 2;
+            int verticalPos = GameWidth / 2 - 15;
+
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.SetCursorPosition(verticalPos, horizontalPos);
+            Console.Write("|{0}|", new string('-', 27));
+            Console.SetCursorPosition(verticalPos, horizontalPos + 1);
+            Console.Write("||        YOU WON!         ||");
+            Console.SetCursorPosition(verticalPos, horizontalPos + 2);
+            Console.Write("||                         ||");
+            Console.SetCursorPosition(verticalPos, horizontalPos + 3);
+            int score = pacman.GetScore();
+            Console.Write("||       SCORE: {0}{1}  ||", score, new string(' ', 9 - score.ToString().Length));
+            Console.SetCursorPosition(verticalPos, horizontalPos + 4);
+            Console.Write("||                         ||");
+            Console.SetCursorPosition(verticalPos, horizontalPos + 5);
+            Console.Write("||    PRESS ESC TO EXIT    ||");
+            Console.SetCursorPosition(verticalPos, horizontalPos + 6);
+            Console.Write("|{0}|", new string('-', 27));
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.SetCursorPosition(0, GameHeight - 1);
+
+            ConsoleKeyInfo keyPressed = Console.ReadKey(true);
+            while (true)
+            {
+                if (keyPressed.Key == ConsoleKey.Escape)
+                {
+                    Environment.Exit(0);
+                }
+
+                keyPressed = Console.ReadKey(true);
+            }
         }
 
         public static void PlayMusic()

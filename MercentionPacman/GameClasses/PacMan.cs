@@ -73,6 +73,7 @@ namespace MercentionPacman.GameClasses
         public void LevelUp()
         {
             this.level++;
+            this.score = 0;
         }
         public string GetSymbol()
         {
