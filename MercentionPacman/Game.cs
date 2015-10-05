@@ -17,7 +17,7 @@ namespace MercentionPacman
 
         // Player
         static PacMan pacman = new PacMan();
-        
+
         // ...
 
         // Monsters
@@ -86,19 +86,15 @@ namespace MercentionPacman
                             break;
                         case ConsoleKey.UpArrow:
                             pacman.NextDirection = "up";
-                            // Променя Pacman NextDirection
                             break;
                         case ConsoleKey.DownArrow:
                             pacman.NextDirection = "down";
-                            // Променя Pacman NextDirection
                             break;
                         case ConsoleKey.LeftArrow:
                             pacman.NextDirection = "left";
-                            // Променя Pacman NextDirection
                             break;
                         case ConsoleKey.RightArrow:
                             pacman.NextDirection = "right";
-                            // Променя Pacman NextDirection
                             break;
                     }
                 }
@@ -116,17 +112,19 @@ namespace MercentionPacman
                 // Ако pacman.NextDirection != pacman.CurrentDirection
                 // го премества в новата посока - променя PacmanPosition
                 // Записва промените в GameBoard-a
-               switch (pacman.CheckCell(border, pacman.NextDirection))
+                switch (pacman.CheckCell(border, pacman.NextDirection))
                 {
                     case BoardElements.Dot:
                         MovePlayer(pacman.NextDirection);
                         pacman.EarnPoint();
                         pacman.Direction = pacman.NextDirection;
+                        LoadGUI();
                         break;
                     case BoardElements.Star:
                         MovePlayer(pacman.NextDirection);
                         pacman.EarnStar();
                         pacman.Direction = pacman.NextDirection;
+                        LoadGUI();
                         break;
                     case BoardElements.Empty:
                         MovePlayer(pacman.NextDirection);
@@ -135,6 +133,7 @@ namespace MercentionPacman
                     case BoardElements.Monster:
                         pacman.LoseLife();
                         MovePlayer("reset");
+                        LoadGUI();
                         break;
                     case BoardElements.Wall:
                         switch (pacman.CheckCell(border, pacman.Direction))
@@ -142,10 +141,12 @@ namespace MercentionPacman
                             case BoardElements.Dot:
                                 MovePlayer(pacman.Direction);
                                 pacman.EarnPoint();
+                                LoadGUI();
                                 break;
                             case BoardElements.Star:
                                 MovePlayer(pacman.Direction);
                                 pacman.EarnStar();
+                                LoadGUI();
                                 break;
                             case BoardElements.Empty:
                                 MovePlayer(pacman.Direction);
@@ -153,6 +154,7 @@ namespace MercentionPacman
                             case BoardElements.Monster:
                                 pacman.LoseLife();
                                 MovePlayer("reset");
+                                LoadGUI();
                                 break;
                             case BoardElements.Wall:
                                 break;
@@ -172,13 +174,13 @@ namespace MercentionPacman
         {
             Console.ForegroundColor = ConsoleColor.Green;
             Console.SetCursorPosition(40, 2);
-            Console.Write("Level: ");
+            Console.Write("Level: {0}", pacman.GetLevel());
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.SetCursorPosition(40, 4);
-            Console.Write("Score: ");
+            Console.Write("Score: {0}", pacman.GetScore());
             Console.ForegroundColor = ConsoleColor.Red;
             Console.SetCursorPosition(40, 6);
-            Console.Write("Lives: ");
+            Console.Write("Lives: {0}", pacman.Lives());
             Console.ForegroundColor = ConsoleColor.White;
 
             Console.SetCursorPosition(40, GameHeight - 8);
@@ -239,7 +241,7 @@ namespace MercentionPacman
 
         static void ReadUserKey()
         {
-            
+
         }
 
         static void SetGamePaused()
@@ -302,6 +304,7 @@ namespace MercentionPacman
                 case "up":
                     Console.SetCursorPosition(pacman.GetPosX(), pacman.GetPosY());
                     Console.Write(" ");
+                    ChangeBoard();
                     Console.SetCursorPosition(pacman.GetPosX(), pacman.GetPosY() - 1);
                     Console.ForegroundColor = pacman.GetColor();
                     Console.Write(pacman.GetSymbol());
@@ -310,6 +313,7 @@ namespace MercentionPacman
                 case "right":
                     Console.SetCursorPosition(pacman.GetPosX(), pacman.GetPosY());
                     Console.Write(" ");
+                    ChangeBoard();
                     Console.SetCursorPosition(pacman.GetPosX() + 1, pacman.GetPosY());
                     Console.ForegroundColor = pacman.GetColor();
                     Console.Write(pacman.GetSymbol());
@@ -318,6 +322,7 @@ namespace MercentionPacman
                 case "down":
                     Console.SetCursorPosition(pacman.GetPosX(), pacman.GetPosY());
                     Console.Write(" ");
+                    ChangeBoard();
                     Console.SetCursorPosition(pacman.GetPosX(), pacman.GetPosY() + 1);
                     Console.ForegroundColor = pacman.GetColor();
                     Console.Write(pacman.GetSymbol());
@@ -326,6 +331,7 @@ namespace MercentionPacman
                 case "left":
                     Console.SetCursorPosition(pacman.GetPosX(), pacman.GetPosY());
                     Console.Write(" ");
+                    ChangeBoard();
                     Console.SetCursorPosition(pacman.GetPosX() - 1, pacman.GetPosY());
                     Console.ForegroundColor = pacman.GetColor();
                     Console.Write(pacman.GetSymbol());
@@ -334,6 +340,7 @@ namespace MercentionPacman
                 case "reset":
                     Console.SetCursorPosition(pacman.GetPosX(), pacman.GetPosY());
                     Console.Write(" ");
+                    ChangeBoard();
                     pacman.ResetPacMan();
                     Console.SetCursorPosition(pacman.GetPosX(), pacman.GetPosY());
                     Console.ForegroundColor = pacman.GetColor();
@@ -395,6 +402,10 @@ namespace MercentionPacman
                 }
                 Console.WriteLine();
             }
+        }
+        static void ChangeBoard()
+        {
+            border[pacman.GetPosY(), pacman.GetPosX()] = " ";
         }
 
         static void ShowWelcomeMenu()

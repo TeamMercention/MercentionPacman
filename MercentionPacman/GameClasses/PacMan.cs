@@ -26,6 +26,7 @@ namespace MercentionPacman.GameClasses
 
         private int score;
         private int lives;
+        private int level;
 
         public int GetScore()
         {
@@ -35,18 +36,26 @@ namespace MercentionPacman.GameClasses
         {
             return this.lives;
         }
+        public int GetLevel()
+        {
+            return this.level;
+        }
         public PacMan()
         {
             this.pacManPos = new Position(17, 20);
             this.score = 0;
             this.lives = 3;
+            this.level = 1;
 
             // Създаване на нов PacMan със стойности по подразбиране
         }
 
         public void ResetPacMan()
         {
-
+            this.pacManPos.X = 17;
+            this.pacManPos.Y = 20;
+            this.Direction = "right";
+            this.NextDirection = "right";
         }
         public void LoseLife()
         {
@@ -55,11 +64,15 @@ namespace MercentionPacman.GameClasses
 
         public void EarnPoint()
         {
-            //this.Score++;
+            this.score++;
         }
         public void EarnStar()
         {
-            //this.Score += 100;
+            this.score += 100;
+        }
+        public void LevelUp()
+        {
+            this.level++;
         }
         public string GetSymbol()
         {
