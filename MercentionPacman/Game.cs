@@ -24,7 +24,6 @@ namespace MercentionPacman
         static Monster[] monsterList =
         {
             new Monster(ConsoleColor.Red,15,8),
-
             new Monster(ConsoleColor.Cyan,16,12),
             new Monster(ConsoleColor.Magenta,17,12),
             new Monster(ConsoleColor.DarkCyan,18,12),
@@ -106,6 +105,7 @@ namespace MercentionPacman
                     BlinkPausedText();
                     continue;
                 }
+                MonsterAi();
 
                 // Player Movement
                 // Проверява дали е възможно да се премести в зададената посока (дали има стена).
@@ -113,7 +113,7 @@ namespace MercentionPacman
                 // Ако pacman.NextDirection != pacman.CurrentDirection
                 // го премества в новата посока - променя PacmanPosition
                 // Записва промените в GameBoard-a
-                switch (pacman.CheckCell(border, pacman.NextDirection))
+                switch (pacman.CheckCell(border, pacman.NextDirection, monsterList))
                 {
                     case BoardElements.Dot:
                         MovePlayer(pacman.NextDirection);
@@ -137,7 +137,7 @@ namespace MercentionPacman
                         LoadGUI();
                         break;
                     case BoardElements.Wall:
-                        switch (pacman.CheckCell(border, pacman.Direction))
+                        switch (pacman.CheckCell(border, pacman.Direction, monsterList))
                         {
                             case BoardElements.Dot:
                                 MovePlayer(pacman.Direction);
@@ -163,7 +163,6 @@ namespace MercentionPacman
                         break;
                 }
                 // Monster Ai
-                MonsterAi();
 
                 CheckIfNoLives();
 
@@ -390,7 +389,7 @@ namespace MercentionPacman
                             MoveMonster();
                         }
                         break;
-                        //default: break;
+
                 }
             }
         }
@@ -428,6 +427,8 @@ namespace MercentionPacman
         static void ChangeBoard()
         {
             border[pacman.GetPosY(), pacman.GetPosX()] = " ";
+
+        
         }
 
         static void ShowWelcomeMenu()

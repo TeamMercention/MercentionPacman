@@ -92,7 +92,7 @@ namespace MercentionPacman.GameClasses
             return this.color;
         }
 
-        public BoardElements CheckCell(string[,] border, string direction)
+        public BoardElements CheckCell(string[,] border, string direction, Monster[] monsterList)
         {
             switch (direction)
             {
@@ -105,10 +105,20 @@ namespace MercentionPacman.GameClasses
                             return BoardElements.Dot;
                         case "*":
                             return BoardElements.Star;
-                        case "☻":
-                            return BoardElements.Monster;
+                        //case "☻":
+                        //  return BoardElements.Monster;
+                        default:
+                            if (checkIfMonsterAppears(monsterList, this.pacManPos.Y - 1, this.pacManPos.X))
+                            {
+                                return BoardElements.Monster;
+                            }
+                            else
+                            {
+                                return BoardElements.Empty;
+                            }
                     }
-                    return BoardElements.Empty;
+
+                //return BoardElements.Empty;
                 case "right":
                     switch (border[this.pacManPos.Y, this.pacManPos.X + 1])
                     {
@@ -118,10 +128,18 @@ namespace MercentionPacman.GameClasses
                             return BoardElements.Dot;
                         case "*":
                             return BoardElements.Star;
-                        case "☻":
-                            return BoardElements.Monster;
+                        default:
+                            if (checkIfMonsterAppears(monsterList, this.pacManPos.Y, this.pacManPos.X + 1))
+                            {
+                                return BoardElements.Monster;
+                            }
+                            else
+                            {
+                                return BoardElements.Empty;
+                            }
                     }
-                    return BoardElements.Empty;
+
+                //return BoardElements.Empty;
                 case "down":
                     switch (border[this.pacManPos.Y + 1, this.pacManPos.X])
                     {
@@ -131,10 +149,18 @@ namespace MercentionPacman.GameClasses
                             return BoardElements.Dot;
                         case "*":
                             return BoardElements.Star;
-                        case "☻":
-                            return BoardElements.Monster;
+                        default:
+                            if (checkIfMonsterAppears(monsterList, this.pacManPos.Y + 1, this.pacManPos.X))
+                            {
+                                return BoardElements.Monster;
+                            }
+                            else
+                            {
+                                return BoardElements.Empty;
+                            }
                     }
-                    return BoardElements.Empty;
+
+                //return BoardElements.Empty;
                 case "left":
                     switch (border[this.pacManPos.Y, this.pacManPos.X - 1])
                     {
@@ -144,12 +170,29 @@ namespace MercentionPacman.GameClasses
                             return BoardElements.Dot;
                         case "*":
                             return BoardElements.Star;
-                        case "☻":
-                            return BoardElements.Monster;
+                        default:
+                            if (checkIfMonsterAppears(monsterList, this.pacManPos.Y, this.pacManPos.X - 1))
+                            {
+                                return BoardElements.Monster;
+                            }
+                            else
+                            {
+                                return BoardElements.Empty;
+                            }
                     }
-                    return BoardElements.Empty;
+
+                //return BoardElements.Empty;
+                default:
+                    if (checkIfMonsterAppears(monsterList, pacManPos.Y, pacManPos.X))
+                    {
+                        return BoardElements.Monster;
+                    }
+                    else
+                    {
+                        return BoardElements.Empty;
+                    }
             }
-            return BoardElements.Empty;
+            //return BoardElements.Empty;
         }
         public void MoveUp()
         {
@@ -167,6 +210,21 @@ namespace MercentionPacman.GameClasses
         {
             this.pacManPos.X += 1;
         }
+
+        public bool checkIfMonsterAppears(Monster[] monsterList, int pacManPosY, int pacManPosX)
+        {
+            foreach (var monster in monsterList)
+            {
+                if (monster.GetPosX() == pacManPosX && monster.GetPosY() == pacManPosY)
+                {
+                    return true;
+                }
+
+            }
+
+            return false;
+        }
+
     }
 }
 
