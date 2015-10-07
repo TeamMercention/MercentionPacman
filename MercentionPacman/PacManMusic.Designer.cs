@@ -68,5 +68,14 @@ namespace MercentionPacman {
                 return ResourceManager.GetStream("pacman_beginning", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
+        /// </summary>
+        internal static System.IO.UnmanagedMemoryStream pacman_death {
+            get {
+                return ResourceManager.GetStream("pacman_death", resourceCulture);
+            }
+        }
     }
 }

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Threading;
+using System.Media;
 
 namespace MercentionPacman.GameClasses
 {
@@ -60,11 +62,16 @@ namespace MercentionPacman.GameClasses
         public void LoseLife()
         {
             this.lives--;
+            DeathPlayer();
+            Thread.Sleep(1200);
         }
+
+        
 
         public void EarnPoint()
         {
             this.score++;
+            
         }
         public void EarnStar()
         {
@@ -225,6 +232,14 @@ namespace MercentionPacman.GameClasses
             return false;
         }
 
+        
+        public void DeathPlayer()
+        {
+            SoundPlayer death = new SoundPlayer(MercentionPacman.PacManMusic.pacman_death);
+            death.Play();
+        }
+
+        
     }
 }
 
