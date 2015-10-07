@@ -18,8 +18,6 @@ namespace MercentionPacman
         // Player
         static PacMan pacman = new PacMan();
 
-        // ...
-
         // Monsters
         static Monster[] monsterList =
         {
@@ -40,7 +38,6 @@ namespace MercentionPacman
 
         static void Main(string[] args)
         {
-            //PacMan pacman = new PacMan(ConsoleColor.Yellow, 17, 20);
             Console.CursorVisible = false;
             Console.Title = "Mercention Pacman";
             Console.WindowWidth = GameWidth;
@@ -54,50 +51,14 @@ namespace MercentionPacman
             RedrawBoard();
             LoadGUI();
 
-            // Load Player
-            // Задава позиция на Pacman. Променя тази позиция на GameBoard-а с иконката на Pacman.
-            Console.SetCursorPosition(pacman.GetPosX(), pacman.GetPosY());
-            Console.ForegroundColor = pacman.GetColor();
-            Console.Write(pacman.GetSymbol());
-            //LoadPlayer();
-            // Load Monsters
-            // Като горното, само че за Monster-и
+            LoadPlayer();
+
             LoadMonsters();
 
-            // Game logic
-            // Този цикъл ще се изпълнява постоянно, докато играчът не натисне ESC
             while (continueLoop)
             {
 
-                // Read User Key
-                // Проверява дали има натиснат бутон от клавиатурата
-                // Ако има - добавя го в pacman.NextDirection
-                // ESC = изход, P = пауза
-                if (Console.KeyAvailable)
-                {
-                    switch (Console.ReadKey(true).Key)
-                    {
-                        case ConsoleKey.Escape:
-                            continueLoop = false; // Прекъсва while цикъла
-                            GameOver();
-                            break;
-                        case ConsoleKey.P:
-                            SetGamePaused();
-                            break;
-                        case ConsoleKey.UpArrow:
-                            pacman.NextDirection = "up";
-                            break;
-                        case ConsoleKey.DownArrow:
-                            pacman.NextDirection = "down";
-                            break;
-                        case ConsoleKey.LeftArrow:
-                            pacman.NextDirection = "left";
-                            break;
-                        case ConsoleKey.RightArrow:
-                            pacman.NextDirection = "right";
-                            break;
-                    }
-                }
+                ReadUserKey();
 
                 // Check if paused
                 if (gamePaused)
@@ -105,70 +66,16 @@ namespace MercentionPacman
                     BlinkPausedText();
                     continue;
                 }
+
                 MonsterAi();
 
-                // Player Movement
-                // Проверява дали е възможно да се премести в зададената посока (дали има стена).
-                // Извършва преместването на pacman.
-                // Ако pacman.NextDirection != pacman.CurrentDirection
-                // го премества в новата посока - променя PacmanPosition
-                // Записва промените в GameBoard-a
-                switch (pacman.CheckCell(border, pacman.NextDirection, monsterList))
-                {
-                    case BoardElements.Dot:
-                        MovePlayer(pacman.NextDirection);
-                        pacman.EarnPoint();
-                        pacman.Direction = pacman.NextDirection;
-                        LoadGUI();
-                        break;
-                    case BoardElements.Star:
-                        MovePlayer(pacman.NextDirection);
-                        pacman.EarnStar();
-                        pacman.Direction = pacman.NextDirection;
-                        LoadGUI();
-                        break;
-                    case BoardElements.Empty:
-                        MovePlayer(pacman.NextDirection);
-                        pacman.Direction = pacman.NextDirection;
-                        break;
-                    case BoardElements.Monster:
-                        pacman.LoseLife();
-                        MovePlayer("reset");
-                        LoadGUI();
-                        break;
-                    case BoardElements.Wall:
-                        switch (pacman.CheckCell(border, pacman.Direction, monsterList))
-                        {
-                            case BoardElements.Dot:
-                                MovePlayer(pacman.Direction);
-                                pacman.EarnPoint();
-                                LoadGUI();
-                                break;
-                            case BoardElements.Star:
-                                MovePlayer(pacman.Direction);
-                                pacman.EarnStar();
-                                LoadGUI();
-                                break;
-                            case BoardElements.Empty:
-                                MovePlayer(pacman.Direction);
-                                break;
-                            case BoardElements.Monster:
-                                pacman.LoseLife();
-                                MovePlayer("reset");
-                                LoadGUI();
-                                break;
-                            case BoardElements.Wall:
-                                break;
-                        }
-                        break;
-                }
-                // Monster Ai
+                PlayerMovement();
 
                 CheckIfNoLives();
 
                 CheckScore();
 
-                Thread.Sleep(200); // Определя скоростта на играта, ще го променяме ако трябва
+                Thread.Sleep(200);
             }
         }
 
@@ -197,7 +104,9 @@ namespace MercentionPacman
 
         static void LoadPlayer()
         {
-
+            Console.SetCursorPosition(pacman.GetPosX(), pacman.GetPosY());
+            Console.ForegroundColor = pacman.GetColor();
+            Console.Write(pacman.GetSymbol());
         }
 
         static void LoadMonsters()
@@ -243,7 +152,31 @@ namespace MercentionPacman
 
         static void ReadUserKey()
         {
-
+            if (Console.KeyAvailable)
+            {
+                switch (Console.ReadKey(true).Key)
+                {
+                    case ConsoleKey.Escape:
+                        continueLoop = false; // Прекъсва while цикъла
+                        GameOver();
+                        break;
+                    case ConsoleKey.P:
+                        SetGamePaused();
+                        break;
+                    case ConsoleKey.UpArrow:
+                        pacman.NextDirection = "up";
+                        break;
+                    case ConsoleKey.DownArrow:
+                        pacman.NextDirection = "down";
+                        break;
+                    case ConsoleKey.LeftArrow:
+                        pacman.NextDirection = "left";
+                        break;
+                    case ConsoleKey.RightArrow:
+                        pacman.NextDirection = "right";
+                        break;
+                }
+            }
         }
 
         static void SetGamePaused()
@@ -297,7 +230,55 @@ namespace MercentionPacman
 
         static void PlayerMovement()
         {
-
+            switch (pacman.CheckCell(border, pacman.NextDirection, monsterList))
+            {
+                case BoardElements.Dot:
+                    MovePlayer(pacman.NextDirection);
+                    pacman.EarnPoint();
+                    pacman.Direction = pacman.NextDirection;
+                    LoadGUI();
+                    break;
+                case BoardElements.Star:
+                    MovePlayer(pacman.NextDirection);
+                    pacman.EarnStar();
+                    pacman.Direction = pacman.NextDirection;
+                    LoadGUI();
+                    break;
+                case BoardElements.Empty:
+                    MovePlayer(pacman.NextDirection);
+                    pacman.Direction = pacman.NextDirection;
+                    break;
+                case BoardElements.Monster:
+                    pacman.LoseLife();
+                    MovePlayer("reset");
+                    LoadGUI();
+                    break;
+                case BoardElements.Wall:
+                    switch (pacman.CheckCell(border, pacman.Direction, monsterList))
+                    {
+                        case BoardElements.Dot:
+                            MovePlayer(pacman.Direction);
+                            pacman.EarnPoint();
+                            LoadGUI();
+                            break;
+                        case BoardElements.Star:
+                            MovePlayer(pacman.Direction);
+                            pacman.EarnStar();
+                            LoadGUI();
+                            break;
+                        case BoardElements.Empty:
+                            MovePlayer(pacman.Direction);
+                            break;
+                        case BoardElements.Monster:
+                            pacman.LoseLife();
+                            MovePlayer("reset");
+                            LoadGUI();
+                            break;
+                        case BoardElements.Wall:
+                            break;
+                    }
+                    break;
+            }
         }
         static void MovePlayer(string direction)
         {
@@ -365,33 +346,59 @@ namespace MercentionPacman
                         if (monsterList[i].CheckLeftCell(monsterList, monsterList[i].GetPosX(), monsterList[i].GetPosY(), border))
                         {
                             monsterList[i].MoveLeft();
-                            MoveMonster();
+                            //MoveMonster();
+                            if (monsterList[i].GetPosX() == pacman.GetPosX() && monsterList[i].GetPosY() == pacman.GetPosY())
+                            {
+                                pacman.LoseLife();
+                                MovePlayer("reset");
+                                LoadGUI();
+                            }
                         }
                         break;
                     case "right":
                         if (monsterList[i].CheckRightCell(monsterList, monsterList[i].GetPosX(), monsterList[i].GetPosY(), border))
                         {
                             monsterList[i].MoveRight();
-                            MoveMonster();
+                            //MoveMonster();
+                            if (monsterList[i].GetPosX() == pacman.GetPosX() && monsterList[i].GetPosY() == pacman.GetPosY())
+                            {
+                                pacman.LoseLife();
+                                MovePlayer("reset");
+                                LoadGUI();
+                            }
                         }
                         break;
                     case "up":
                         if (monsterList[i].CheckUpCell(monsterList, monsterList[i].GetPosX(), monsterList[i].GetPosY(), border))
                         {
                             monsterList[i].MoveUp();
-                            MoveMonster();
+                            //MoveMonster();
+                            if (monsterList[i].GetPosX() == pacman.GetPosX() && monsterList[i].GetPosY() == pacman.GetPosY())
+                            {
+                                pacman.LoseLife();
+                                MovePlayer("reset");
+                                LoadGUI();
+                            }
                         }
                         break;
                     case "down":
                         if (monsterList[i].CheckDownCell(monsterList, monsterList[i].GetPosX(), monsterList[i].GetPosY(), border))
                         {
                             monsterList[i].MoveDown();
-                            MoveMonster();
+                            //MoveMonster();
+                            if (monsterList[i].GetPosX() == pacman.GetPosX() && monsterList[i].GetPosY() == pacman.GetPosY())
+                            {
+                                pacman.LoseLife();
+                                MovePlayer("reset");
+                                LoadGUI();
+                            }
                         }
                         break;
 
                 }
             }
+
+            MoveMonster();
         }
 
         static void CheckScore()
@@ -427,8 +434,6 @@ namespace MercentionPacman
         static void ChangeBoard()
         {
             border[pacman.GetPosY(), pacman.GetPosX()] = " ";
-
-        
         }
 
         static void ShowWelcomeMenu()

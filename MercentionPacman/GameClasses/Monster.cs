@@ -8,13 +8,10 @@ namespace MercentionPacman.GameClasses
 {
     class Monster
     {
-        // public Position MonsterPosition { get; set; }
-        // Текуща позиция
         //69 //28
         private Position monsterPos;
         public int prevPosX;
         public int prevPosY;
-        //private DateTime lastMovedTime = DateTime.Now;
 
         private string symbol = ((char)9787).ToString();
         private ConsoleColor color;
@@ -33,16 +30,11 @@ namespace MercentionPacman.GameClasses
 
         public Monster(ConsoleColor color, int x, int y)
         {
-
+            // Създаване на нов Monster със стойности по подразбиране
             this.color = color;
             this.monsterPos = new Position(x, y);
             this.prevPosX = x;
             this.prevPosY = y;
-
-
-            // Създаване на нов Monster със стойности по подразбиране
-            // ...
-            // this.Counter = 0
         }
 
         public bool CheckLeftCell(Monster[] monsterList, int x, int y, string[,] border)

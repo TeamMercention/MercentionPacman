@@ -10,46 +10,40 @@ namespace MercentionPacman.GameClasses
 {
     class PacMan
     {
-        //public Position PacmanPosition { get; set; }
-        // Текуща позиция
 
         private Position pacManPos;
+        private int score;
+        private int lives;
+        private int level;
 
-        // public char CurrentDirection { get; set; }
-        // Текуща посока
-
-        private string symbol = ((char)67).ToString();
+        private string symbol = ((char)9786).ToString();
         private ConsoleColor color = ConsoleColor.Yellow;
         public string Direction = "right";
         public string NextDirection = "right";
 
-        // public char NextDirection { get; set; }
-        // Следваща посока (ако има натиснат различен бутон от клавиатурата)
-
-        private int score;
-        private int lives;
-        private int level;
 
         public int GetScore()
         {
             return this.score;
         }
+
         public int Lives()
         {
             return this.lives;
         }
+
         public int GetLevel()
         {
             return this.level;
         }
+
         public PacMan()
         {
+            // Създаване на нов PacMan със стойности по подразбиране
             this.pacManPos = new Position(17, 20);
             this.score = 0;
             this.lives = 3;
             this.level = 1;
-
-            // Създаване на нов PacMan със стойности по подразбиране
         }
 
         public void ResetPacMan()
@@ -59,41 +53,45 @@ namespace MercentionPacman.GameClasses
             this.Direction = "right";
             this.NextDirection = "right";
         }
+
         public void LoseLife()
         {
             this.lives--;
-            DeathPlayer();
+            DeathPlayerMusic();
             Thread.Sleep(1200);
         }
-
-        
 
         public void EarnPoint()
         {
             this.score++;
-            
         }
+
         public void EarnStar()
         {
             this.score += 100;
         }
+
         public void LevelUp()
         {
             this.level++;
             this.score = 0;
         }
+
         public string GetSymbol()
         {
             return this.symbol;
         }
+
         public int GetPosX()
         {
             return this.pacManPos.X;
         }
+
         public int GetPosY()
         {
             return this.pacManPos.Y;
         }
+
         public ConsoleColor GetColor()
         {
             return this.color;
@@ -233,13 +231,12 @@ namespace MercentionPacman.GameClasses
         }
 
         
-        public void DeathPlayer()
+        public void DeathPlayerMusic()
         {
             SoundPlayer death = new SoundPlayer(MercentionPacman.PacManMusic.pacman_death);
             death.Play();
         }
 
-        
     }
 }
 

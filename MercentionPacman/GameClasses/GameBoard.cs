@@ -8,9 +8,6 @@ namespace MercentionPacman.GameClasses
 {
     public class GameBoard
     {
-        private static string pacmanIcon = "O";
-        // ...
-
         string[,] board =
 
             {
@@ -51,29 +48,6 @@ namespace MercentionPacman.GameClasses
             get { return board; }
         }
 
-        public void ChangeElement(int height, int width, BoardElements newElement)
-        {
-            // switch (newElement)
-            // case Wall:
-            // GameBoard[height, width] = '#';
-
-            // case Dot:
-            // GameBoard[height, width] = '.';
-            // ...
-
-            switch (newElement)
-            {
-                case BoardElements.Pacman:
-                    this.board[height, width] = pacmanIcon;
-                    break;
-                case BoardElements.Empty:
-                    this.board[height, width] = " ";
-                    break;
-            }
-
-
-
-        }
     }
 
     public enum BoardElements
