@@ -1,6 +1,6 @@
 # MercentionPacman
 This is a C# console implementation of the popular game Pacman.
-It is built as a teamwork project for the Advanced C# class in [Software University](https://softuni.bg/).
+It is built as a teamwork project for the Advanced C# class at [Software University](https://softuni.bg/).
 
 ### Team Mercention
 - Alexander Ivanov ([vanogrid](https://github.com/vanogrid))
